@@ -15,7 +15,7 @@ services:
       - db_data:/var/lib/postgresql/data
 
   app:
-    image: ${{ secrets.DOCKER_USERNAME }}/patient-app:latest
+    image: jeevakannan/patient-app:latest
     container_name: patient-app
     depends_on:
       - db
