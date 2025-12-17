@@ -1,40 +1,9 @@
 version: "3.8"
 
 services:
-  patient-postgres:
-    image: postgres:15
-    container_name: patient-postgres
-    environment:
-      POSTGRES_DB: db
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: pass
-    ports:
-      - "5432:5432"
-    networks:
-      - patient-network
-    healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U postgres"]
-      interval: 10s
-      timeout: 5s
-      retries: 5
-
-  patient-service:
-    build:
-      context: .
-      dockerfile: Dockerfile
-    container_name: patient-service
-    depends_on:
-      patient-postgres:
-        condition: service_healthy
-    environment:
-      SPRING_DATASOURCE_URL: jdbc:postgresql://patient-postgres:5432/db
-      SPRING_DATASOURCE_USERNAME: postgres
-      SPRING_DATASOURCE_PASSWORD: pass
+  patient-app:
+    build: .
+    container_name: patient_app
     ports:
       - "8080:8080"
-    networks:
-      - patient-network
-
-networks:
-  patient-network:
-    driver: bridge
+    restart: always
