@@ -13,6 +13,6 @@ FROM eclipse-temurin:17-jdk-alpine
 
 WORKDIR /app
 
-COPY target/patient-service.war app.war
+COPY --from=build /app/target/*.jar app.jar
 
-ENTRYPOINT ["java","-jar","app.war"]
+ENTRYPOINT ["java","-jar","app.jar"]
